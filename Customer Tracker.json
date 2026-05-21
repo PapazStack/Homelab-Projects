@@ -1,0 +1,276 @@
+{
+  "name": "Customer Tracker",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "d2aa1223-05cc-4c91-be7a-a4342d337341",
+        "options": {
+          "rawBody": true
+        }
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "023d099c-9317-4560-aa62-172aa57f2e19",
+      "name": "Webhook",
+      "webhookId": "d2aa1223-05cc-4c91-be7a-a4342d337341",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "19WlFVb7oEff3MxAPj3zBVVAL_tXhHb-fAv5PXvxwaro",
+          "mode": "list",
+          "cachedResultName": "Customer Intake",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/19WlFVb7oEff3MxAPj3zBVVAL_tXhHb-fAv5PXvxwaro/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/19WlFVb7oEff3MxAPj3zBVVAL_tXhHb-fAv5PXvxwaro/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Phone Number": "={{ $json.body['Phone Number'] }}{{ $json.body.data.fields[3].value }}",
+            "Email ": "={{ $json.body.Email }}{{ $json.body.data.fields[2].value }}",
+            "Last Name": "={{ $json.body['Last Name'] }}{{ $json.body.data.fields[1].value }}",
+            "First Name": "={{ $json.body.data.fields[0].value }}{{ $json.body['First Name'] }}",
+            "Date ": "={{ $today.format('DDD') }}",
+            "Timestamp": "={{ $now.format('t') }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "First Name",
+              "displayName": "First Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Last Name",
+              "displayName": "Last Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Email ",
+              "displayName": "Email ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Phone Number",
+              "displayName": "Phone Number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Date ",
+              "displayName": "Date ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Timestamp",
+              "displayName": "Timestamp",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        256,
+        0
+      ],
+      "id": "2f9c09b0-675f-4fc0-befd-2ab944f060ed",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "6lNyp4Fie5ONgJ73",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "guildId": {
+          "__rl": true,
+          "value": "1431034867394805772",
+          "mode": "list",
+          "cachedResultName": "PapazStack",
+          "cachedResultUrl": "https://discord.com/channels/1431034867394805772"
+        },
+        "channelId": {
+          "__rl": true,
+          "value": "1492034563906732143",
+          "mode": "list",
+          "cachedResultName": "homelab-alerts",
+          "cachedResultUrl": "https://discord.com/channels/1431034867394805772/1492034563906732143"
+        },
+        "content": "New Client Form Completed",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.discord",
+      "typeVersion": 2,
+      "position": [
+        256,
+        -208
+      ],
+      "id": "3b3ef836-3499-4259-998c-df47b00f1e67",
+      "name": "Send a message",
+      "webhookId": "703ac369-4ad1-4e7b-8862-76a5ec802698",
+      "credentials": {
+        "discordBotApi": {
+          "id": "8eCW4knPNs1h2oNB",
+          "name": "Discord Bot account"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "Webhook": [
+      {
+        "json": {
+          "headers": {
+            "host": "n8n.dabzhub.xyz",
+            "user-agent": "Tally Webhooks",
+            "content-length": "1306",
+            "accept": "application/json, text/plain, */*",
+            "accept-encoding": "gzip",
+            "baggage": "sentry-environment=production,sentry-release=564febec9e06ec78d838a7fbaa2f42ec2d809a2d,sentry-public_key=6af4b6673f1648edaa8fef3f2ca43405,sentry-trace_id=47c5db9a97ea4eaf2a3877f473609b9d,sentry-org_id=407628,sentry-sampled=false,sentry-sample_rand=0.847844302808112,sentry-sample_rate=0",
+            "cdn-loop": "cloudflare; loops=1",
+            "cf-connecting-ip": "34.96.62.155",
+            "cf-ipcountry": "BE",
+            "cf-ray": "9ff10f3b5d82c765-LHR",
+            "cf-visitor": "{\"scheme\":\"http\"}",
+            "cf-warp-tag-id": "1cf18284-a607-421f-a65c-25d4e71fb93a",
+            "connection": "keep-alive",
+            "content-type": "application/json",
+            "sentry-trace": "47c5db9a97ea4eaf2a3877f473609b9d-02811ea7cec5f044-0",
+            "x-forwarded-for": "34.96.62.155",
+            "x-forwarded-proto": "http"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "eventId": "79cc8362-08c2-48ce-9b12-4635464bc444",
+            "eventType": "FORM_RESPONSE",
+            "createdAt": "2026-05-21T05:07:47.050Z",
+            "data": {
+              "responseId": "EqXWREl",
+              "submissionId": "EqXWREl",
+              "respondentId": "Xx8k8NL",
+              "formId": "Me6k0E",
+              "formName": "Customer Info",
+              "createdAt": "2026-05-21T05:07:46.000Z",
+              "submissionPdfUrl": "https://api.tally.so/forms/Me6k0E/submissions/EqXWREl/pdf?accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWJtaXNzaW9uSWQiOiJFcVhXUkVsIiwiZm9ybUlkIjoiTWU2azBFIiwiaWF0IjoxNzc5MzQwMDY3fQ.P5pzBlZtGuJ1MQRy-BVI-uZV-oxQ9Pjny9UpvFnKh9o&signature=db94ec50939c81aa064af0a464e4f8150b9b1531e6b418cf1393a26a8a39de57",
+              "submissionPreviewUrl": "https://tally.so/forms/Me6k0E/submissions/EqXWREl/preview?accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWJtaXNzaW9uSWQiOiJFcVhXUkVsIiwiZm9ybUlkIjoiTWU2azBFIiwiaWF0IjoxNzc5MzQwMDY3fQ.P5pzBlZtGuJ1MQRy-BVI-uZV-oxQ9Pjny9UpvFnKh9o&signature=db94ec50939c81aa064af0a464e4f8150b9b1531e6b418cf1393a26a8a39de57",
+              "fields": [
+                {
+                  "key": "question_rEkZNl",
+                  "label": "First Name",
+                  "type": "INPUT_TEXT",
+                  "value": "Daniel"
+                },
+                {
+                  "key": "question_4jpbWk",
+                  "label": "Last Name",
+                  "type": "INPUT_TEXT",
+                  "value": "Roybal"
+                },
+                {
+                  "key": "question_jxkVdx",
+                  "label": "Email",
+                  "type": "INPUT_TEXT",
+                  "value": "droybalj@gmail.com"
+                },
+                {
+                  "key": "question_2rD6qL",
+                  "label": "Phone Number",
+                  "type": "INPUT_TEXT",
+                  "value": "9707791493"
+                }
+              ]
+            }
+          },
+          "webhookUrl": "http://n8n.dabzhub.xyz/webhook/d2aa1223-05cc-4c91-be7a-a4342d337341",
+          "executionMode": "production"
+        },
+        "binary": {
+          "data": {
+            "data": "eyJldmVudElkIjoiNzljYzgzNjItMDhjMi00OGNlLTliMTItNDYzNTQ2NGJjNDQ0IiwiZXZlbnRUeXBlIjoiRk9STV9SRVNQT05TRSIsImNyZWF0ZWRBdCI6IjIwMjYtMDUtMjFUMDU6MDc6NDcuMDUwWiIsImRhdGEiOnsicmVzcG9uc2VJZCI6IkVxWFdSRWwiLCJzdWJtaXNzaW9uSWQiOiJFcVhXUkVsIiwicmVzcG9uZGVudElkIjoiWHg4azhOTCIsImZvcm1JZCI6Ik1lNmswRSIsImZvcm1OYW1lIjoiQ3VzdG9tZXIgSW5mbyIsImNyZWF0ZWRBdCI6IjIwMjYtMDUtMjFUMDU6MDc6NDYuMDAwWiIsInN1Ym1pc3Npb25QZGZVcmwiOiJodHRwczovL2FwaS50YWxseS5zby9mb3Jtcy9NZTZrMEUvc3VibWlzc2lvbnMvRXFYV1JFbC9wZGY/YWNjZXNzVG9rZW49ZXlKaGJHY2lPaUpJVXpJMU5pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SnpkV0p0YVhOemFXOXVTV1FpT2lKRmNWaFhVa1ZzSWl3aVptOXliVWxrSWpvaVRXVTJhekJGSWl3aWFXRjBJam94TnpjNU16UXdNRFkzZlEuUDVwekJsWnRHdUoxTVFSeS1CVkktdVpWLW94UTlQam55OVVwdkZuS2g5byZzaWduYXR1cmU9ZGI5NGVjNTA5MzljODFhYTA2NGFmMGE0NjRlNGY4MTUwYjliMTUzMWU2YjQxOGNmMTM5M2EyNmE4YTM5ZGU1NyIsInN1Ym1pc3Npb25QcmV2aWV3VXJsIjoiaHR0cHM6Ly90YWxseS5zby9mb3Jtcy9NZTZrMEUvc3VibWlzc2lvbnMvRXFYV1JFbC9wcmV2aWV3P2FjY2Vzc1Rva2VuPWV5SmhiR2NpT2lKSVV6STFOaUlzSW5SNWNDSTZJa3BYVkNKOS5leUp6ZFdKdGFYTnphVzl1U1dRaU9pSkZjVmhYVWtWc0lpd2labTl5YlVsa0lqb2lUV1UyYXpCRklpd2lhV0YwSWpveE56YzVNelF3TURZM2ZRLlA1cHpCbFp0R3VKMU1RUnktQlZJLXVaVi1veFE5UGpueTlVcHZGbktoOW8mc2lnbmF0dXJlPWRiOTRlYzUwOTM5YzgxYWEwNjRhZjBhNDY0ZTRmODE1MGI5YjE1MzFlNmI0MThjZjEzOTNhMjZhOGEzOWRlNTciLCJmaWVsZHMiOlt7ImtleSI6InF1ZXN0aW9uX3JFa1pObCIsImxhYmVsIjoiRmlyc3QgTmFtZSIsInR5cGUiOiJJTlBVVF9URVhUIiwidmFsdWUiOiJEYW5pZWwifSx7ImtleSI6InF1ZXN0aW9uXzRqcGJXayIsImxhYmVsIjoiTGFzdCBOYW1lIiwidHlwZSI6IklOUFVUX1RFWFQiLCJ2YWx1ZSI6IlJveWJhbCJ9LHsia2V5IjoicXVlc3Rpb25fanhrVmR4IiwibGFiZWwiOiJFbWFpbCIsInR5cGUiOiJJTlBVVF9URVhUIiwidmFsdWUiOiJkcm95YmFsakBnbWFpbC5jb20ifSx7ImtleSI6InF1ZXN0aW9uXzJyRDZxTCIsImxhYmVsIjoiUGhvbmUgTnVtYmVyIiwidHlwZSI6IklOUFVUX1RFWFQiLCJ2YWx1ZSI6Ijk3MDc3OTE0OTMifV19fQ==",
+            "mimeType": "application/json"
+          }
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      }
+    ]
+  },
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "00dbc48f-cd7c-461d-bdb6-9b663928924b",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "e66a7ac0c9397fbaef0e4c17c26c9458699e788ee964c77cdc1b91bfa8261404"
+  },
+  "id": "eH0UQ2Ilx7ZhsAwW",
+  "tags": []
+}
